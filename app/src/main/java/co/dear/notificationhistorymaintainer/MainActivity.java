@@ -1,5 +1,9 @@
 package co.dear.notificationhistorymaintainer;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,5 +37,18 @@ public class MainActivity extends AppCompatActivity {
                 "For the the app. to work you need to enable the Notification Listener Service. Enable it now?",
                 "Yes",
                 "No").show();
+    }
+
+    private class NotificationReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            notifications.add(new NotificationModel(
+                    intent.getIntExtra("id", -1),
+                    (Icon) intent.getParcelableExtra("icon"),
+                    intent.getStringExtra("title"),
+                    intent.getStringExtra("desc"),
+                    intent.getStringExtra("pkg")));
+        }
     }
 }
