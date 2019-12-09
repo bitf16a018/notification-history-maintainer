@@ -1,8 +1,11 @@
 package co.dear.notificationhistorymaintainer;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.Settings;
+import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -21,10 +24,27 @@ class AlertDialogUtils {
         alertDialogBuilder.setNegativeButton(negativeOption,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(1);
                     }
                 });
         return (alertDialogBuilder.create());
+    }
+
+    static boolean isServiceEnabled(Context context, String action) {
+        String pkgName = context.getPackageName();
+        final String flat = Settings.Secure.getString(context.getContentResolver(),
+                action);
+        if (!TextUtils.isEmpty(flat)) {
+            final String[] names = flat.split(":");
+            for (String name : names) {
+                final ComponentName cn = ComponentName.unflattenFromString(name);
+                if (cn != null) {
+                    if (TextUtils.equals(pkgName, cn.getPackageName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

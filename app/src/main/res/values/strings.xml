@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Notification History Maintainer</string>
+    <string name="notification_access_dialog_title">Notification Listener Service</string>
+    <string name="notification_access_dialog_message">For the the app. to work you need to enable the Notification Listener Service. Enable it now?</string>
+    <string name="notification_access_dialog_positive_option">Yes</string>
+    <string name="notification_access_dialog_negative_option">No</string>
 </resources>
