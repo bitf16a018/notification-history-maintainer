@@ -65,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, new IntentFilter(UPDATE_UI));
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+        }
+    }
+
     private class NotificationReceiver extends BroadcastReceiver {
 
         @Override
