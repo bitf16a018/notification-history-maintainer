@@ -3,6 +3,7 @@ package co.dear.notificationhistorymaintainer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MyAdapter adapter;
     List<NotificationModel> notifications = new ArrayList<>();
+    NotificationReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
                 "For the the app. to work you need to enable the Notification Listener Service. Enable it now?",
                 "Yes",
                 "No").show();
+        receiver = new NotificationReceiver();
+        registerReceiver(receiver, new IntentFilter(UPDATE_UI));
     }
 
     private class NotificationReceiver extends BroadcastReceiver {
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.getStringExtra("title"),
                     intent.getStringExtra("desc"),
                     intent.getStringExtra("pkg")));
+            adapter.notifyDataSetChanged();
         }
     }
 }
