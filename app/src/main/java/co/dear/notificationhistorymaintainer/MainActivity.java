@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String UPDATE_UI = "co.dear.notificationhistorymaintainer.UPDATE_UI";
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
     RecyclerView recyclerView;
     MyAdapter adapter;
