@@ -1,6 +1,5 @@
 package co.dear.notificationhistorymaintainer;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-    private Context context;
     private List<NotificationModel> notifications;
 
-    public MyAdapter(Context context, List<NotificationModel> models) {
-        this.context = context;
+    MyAdapter(List<NotificationModel> models) {
         this.notifications = models;
     }
 
@@ -28,6 +25,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.notificationId.setText(notifications.get(position).getId() + "");
         holder.notificationTitleTextView.setText(notifications.get(position).getTitle());
         holder.notificationDescriptionTextView.setText(notifications.get(position).getDescription());
         holder.appIconImageView.setImageIcon(notifications.get(position).getSmallIcon());
