@@ -2,59 +2,69 @@ package co.dear.notificationhistorymaintainer;
 
 import android.graphics.drawable.Icon;
 
-public class NotificationModel {
+class NotificationModel {
     private int id;
     private Icon smallIcon;
+    private Icon largeIcon;
     private String title, description, packageName;
 
-    public NotificationModel() {
+    NotificationModel() {
     }
 
-    NotificationModel(int id, Icon smallIcon, String title, String description, String packageName) {
+    NotificationModel(int id, Icon smallIcon, Icon largeIcon, String title, String description, String packageName) {
         this.id = id;
         this.smallIcon = smallIcon;
         this.title = title;
         this.description = description;
         this.packageName = packageName;
+        this.largeIcon = largeIcon;
     }
 
-    public int getId() {
+    Icon getLargeIcon() {
+        return largeIcon;
+    }
+
+    void setLargeIcon(Icon largeIcon) {
+        this.largeIcon = largeIcon;
+    }
+
+    int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 
-    public Icon getSmallIcon() {
+    Icon getSmallIcon() {
         return smallIcon;
     }
 
-    public void setSmallIcon(Icon smallIcon) {
+    void setSmallIcon(Icon smallIcon) {
         this.smallIcon = smallIcon;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         this.title = title;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    void setDescription(String description) {
         this.description = description;
     }
 
-    public String getPackageName() {
+    String getPackageName() {
         return packageName;
     }
 
-    public void setPackageName(String packageName) {
+    void setPackageName(String packageName) {
         this.packageName = packageName;
     }
 }

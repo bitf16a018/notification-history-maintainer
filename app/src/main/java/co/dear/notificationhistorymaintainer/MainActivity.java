@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String INTENT_FILTER = "just.a.random.dot.separated.string.that.doesnt.make.any.sense";
     public static final String ENABLED_NOTIFICATION_ACCESS_IDENTIFIER = "enabled_notification_listeners";
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
+    private static final String TAG = MainActivity.class.getName();
     RecyclerView recyclerView;
     MyAdapter adapter;
     List<NotificationModel> notifications = new ArrayList<>();
@@ -44,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         receiver = new NotificationReceiver();
-        registerReceiver(receiver, new IntentFilter(INTENT_FILTER));
     }
 
     @Override
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                     getString(R.string.notification_access_dialog_positive_option),
                     getString(R.string.notification_access_dialog_negative_option)).show();
         }
-
         registerReceiver(receiver, new IntentFilter(INTENT_FILTER));
+        Log.wtf(TAG, "onResume: receiver registered");
     }
 
 
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(receiver);
+        Log.wtf(TAG, "onStop: receiver unregistered");
     }
 
     private class NotificationReceiver extends BroadcastReceiver {
@@ -77,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             notifications.add(new NotificationModel(
                     intent.getIntExtra("id", 69),
-                    (Icon) intent.getParcelableExtra("icon"),
+                    (Icon) intent.getParcelableExtra("small_icon"),
+                    (Icon) intent.getParcelableExtra("large_icon"),
                     intent.getStringExtra("title"),
                     intent.getStringExtra("desc"),
                     intent.getStringExtra("pkg")));
