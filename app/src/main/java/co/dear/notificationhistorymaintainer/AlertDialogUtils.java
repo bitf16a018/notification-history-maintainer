@@ -30,10 +30,10 @@ class AlertDialogUtils {
         return (alertDialogBuilder.create());
     }
 
-    static boolean isServiceEnabled(Context context, String action) {
+    static boolean isNotificationListeningServiceEnabled(Context context) {
         String pkgName = context.getPackageName();
         final String flat = Settings.Secure.getString(context.getContentResolver(),
-                action);
+                MainActivity.ENABLED_NOTIFICATION_ACCESS_IDENTIFIER);
         if (!TextUtils.isEmpty(flat)) {
             final String[] names = flat.split(":");
             for (String name : names) {

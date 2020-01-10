@@ -1,6 +1,5 @@
 package co.dear.notificationhistorymaintainer;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,27 +9,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-    private Context context;
+class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private List<NotificationModel> notifications;
 
-    public MyAdapter(Context context, List<NotificationModel> models) {
-        this.context = context;
-        this.notifications = models;
+    MyAdapter(List<NotificationModel> notifications) {
+        this.notifications = notifications;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.notificationId.setText(String.valueOf(notifications.get(position).getId()));
         holder.notificationTitleTextView.setText(notifications.get(position).getTitle());
         holder.notificationDescriptionTextView.setText(notifications.get(position).getDescription());
-        holder.appIconImageView.setImageIcon(notifications.get(position).getSmallIcon());
+        holder.appSmallIconImageView.setImageIcon(notifications.get(position).getSmallIcon());
+        holder.appLargeIconImageView.setImageIcon(notifications.get(position).getLargeIcon());
     }
 
     @Override

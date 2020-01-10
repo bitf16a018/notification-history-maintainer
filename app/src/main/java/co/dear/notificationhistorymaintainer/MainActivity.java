@@ -18,9 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String UPDATE_UI = "co.dear.notificationhistorymaintainer.UPDATE_UI";
-    public static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
+    public static final String INTENT_FILTER = "just.a.random.dot.separated.string.that.doesnt.make.any.sense";
+    public static final String ENABLED_NOTIFICATION_ACCESS_IDENTIFIER = "enabled_notification_listeners";
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
+    private static final String TAG = MainActivity.class.getName();
     RecyclerView recyclerView;
     MyAdapter adapter;
     List<NotificationModel> notifications = new ArrayList<>();
@@ -33,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(this, notifications);
+        adapter = new MyAdapter(notifications);
         recyclerView.setAdapter(adapter);
 
-        if (!AlertDialogUtils.isServiceEnabled(MainActivity.this, ENABLED_NOTIFICATION_LISTENERS)) {
+        if (!AlertDialogUtils.isNotificationListeningServiceEnabled(MainActivity.this)) {
             AlertDialogUtils.buildNotificationServiceAlertDialog(
                     this,
                     ACTION_NOTIFICATION_LISTENER_SETTINGS,
@@ -47,14 +48,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         receiver = new NotificationReceiver();
-        registerReceiver(receiver, new IntentFilter(UPDATE_UI));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (!AlertDialogUtils.isServiceEnabled(MainActivity.this, ENABLED_NOTIFICATION_LISTENERS)) {
+        if (!AlertDialogUtils.isNotificationListeningServiceEnabled(MainActivity.this)) {
             AlertDialogUtils.buildNotificationServiceAlertDialog(
                     this,
                     ACTION_NOTIFICATION_LISTENER_SETTINGS,
@@ -63,18 +63,16 @@ public class MainActivity extends AppCompatActivity {
                     getString(R.string.notification_access_dialog_positive_option),
                     getString(R.string.notification_access_dialog_negative_option)).show();
         }
-
-        if (receiver == null) receiver = new NotificationReceiver();
-        registerReceiver(receiver, new IntentFilter(UPDATE_UI));
+        registerReceiver(receiver, new IntentFilter(INTENT_FILTER));
+        Log.wtf(TAG, "onResume: receiver registered");
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
 
-        if (receiver != null) {
-            unregisterReceiver(receiver);
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(receiver);
+        Log.wtf(TAG, "onStop: receiver unregistered");
     }
 
     //(Icon) intent.getParcelableExtra("icon"),

@@ -10,9 +10,10 @@ public class NotificationWaliService extends NotificationListenerService {
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
 
-        Intent intent = new Intent(MainActivity.UPDATE_UI);
+        Intent intent = new Intent(MainActivity.INTENT_FILTER);
         intent.putExtra("id", sbn.getId());
-        intent.putExtra("icon", sbn.getNotification().getSmallIcon());
+        intent.putExtra("small_icon", sbn.getNotification().getSmallIcon());
+        intent.putExtra("large_icon", sbn.getNotification().getLargeIcon());
         intent.putExtra("title", sbn.getNotification().extras.getString("android.title"));
         intent.putExtra("desc", sbn.getNotification().extras.getCharSequence("android.text"));
         intent.putExtra("pkg", sbn.getPackageName());
