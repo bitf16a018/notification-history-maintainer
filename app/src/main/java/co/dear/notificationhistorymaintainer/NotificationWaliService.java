@@ -16,6 +16,7 @@ public class NotificationWaliService extends NotificationListenerService {
         intent.putExtra("title", sbn.getNotification().extras.getString("android.title"));
         intent.putExtra("desc", sbn.getNotification().extras.getCharSequence("android.text"));
         intent.putExtra("pkg", sbn.getPackageName());
+        intent.putExtra("time", sbn.getPostTime());
         sendBroadcast(intent);
     }
 }

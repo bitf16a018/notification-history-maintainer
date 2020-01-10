@@ -3,6 +3,7 @@ package co.dear.notificationhistorymaintainer;
 import android.graphics.drawable.Icon;
 
 public class NotificationModel {
+    private String time;
     private int id;
     private Icon smallIcon;
     private String title, description, packageName;
@@ -10,12 +11,12 @@ public class NotificationModel {
     public NotificationModel() {
     }
 
-    NotificationModel(int id, Icon smallIcon, String title, String description, String packageName) {
+    NotificationModel(int id, String title, String description, String packageName, String time) {
         this.id = id;
-        this.smallIcon = smallIcon;
         this.title = title;
         this.description = description;
         this.packageName = packageName;
+        this.time = time;
     }
 
     public int getId() {
@@ -56,5 +57,13 @@ public class NotificationModel {
 
     public void setPackageName(String packageName) {
         this.packageName = packageName;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

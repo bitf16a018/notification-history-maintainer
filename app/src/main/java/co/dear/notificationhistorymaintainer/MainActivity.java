@@ -4,12 +4,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,17 +77,51 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //(Icon) intent.getParcelableExtra("icon"),
     private class NotificationReceiver extends BroadcastReceiver {
+
+        public final String TAG = NotificationReceiver.class.getName();
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            notifications.add(new NotificationModel(
-                    intent.getIntExtra("id", -1),
-                    (Icon) intent.getParcelableExtra("icon"),
-                    intent.getStringExtra("title"),
-                    intent.getStringExtra("desc"),
-                    intent.getStringExtra("pkg")));
+
+            int id = intent.getIntExtra("id", 1);
+            if (notifications.contains(id)) {
+                return;
+            }
+            String title = intent.getStringExtra("title");
+            String description = intent.getStringExtra("desc");
+            String packageName = intent.getStringExtra("pkg");
+
+            long yourmilliseconds = intent.getLongExtra("time", 1);
+//            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+//            Date resultdate = new Date(yourmilliseconds);
+//            Log.wtf("time", sdf.format(resultdate));
+//            String time = sdf.format(resultdate);
+
+
+            NotificationModel notificationModel = new NotificationModel(id, title, description, packageName, String.valueOf(yourmilliseconds));
+
+            //Saving the notification details in database
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Notification Details");
+            Log.wtf(TAG, "onReceive: " + packageName);
+            if (intent.getStringExtra("pkg").equals("com.google.android.apps.messaging"))
+                myRef.child("Message").push().setValue(notificationModel);
+
+            if (intent.getStringExtra("pkg").equals("com.whatsapp"))
+                myRef.child("Whatsapp").push().setValue(notificationModel);
+
+            if (intent.getStringExtra("pkg").equals("com.facebook.katana"))
+                myRef.child("Facebook").push().setValue(notificationModel);
+
+            if (intent.getStringExtra("pkg").equals("com.instagram.android"))
+                myRef.child("Instagram").push().setValue(notificationModel);
+
+            notifications.add(notificationModel);
             adapter.notifyDataSetChanged();
+
+
         }
     }
 }
