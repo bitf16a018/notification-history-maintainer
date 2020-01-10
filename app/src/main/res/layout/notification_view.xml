@@ -1,0 +1,68 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:paddingTop="8dp">
+
+
+    <RelativeLayout
+        android:id="@+id/notification_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+
+        android:background="@drawable/card_bg"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="24dp"
+            android:text="Notification Title"
+            android:textColor="@color/title_text_color"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/description_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_text_view"
+            android:layout_alignStart="@id/title_text_view"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="8dp"
+            android:text="lorem ispum dhur futay mu kanjra na parh tu ay parh k li lena ay. khach jai na hove taa. ja kam kr apna. hor koi kam ni tenu? ajay v parh reya ay. tera kush ni ho skda."
+            android:textColor="@color/content_text_color" />
+
+        <TextView
+            android:id="@+id/time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/title_text_view"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:text="TextView"
+            android:textColor="@color/content_text_color" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/icon_image_view"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/notification_container"
+        app:layout_constraintStart_toStartOf="@+id/notification_container"
+        app:layout_constraintTop_toTopOf="@+id/notification_container"
+        app:srcCompat="@mipmap/ic_launcher" />
+</androidx.constraintlayout.widget.ConstraintLayout>

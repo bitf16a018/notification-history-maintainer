@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "53303346108-74asfn7770bda5i1tu5n3k6dp66tlc6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.dear.notificationhistorymaintainer",
+            "certificate_hash": "fb9521043f9353e1b488b0e74f1d4c66e254f46d"
+          }
+        },
+        {
           "client_id": "53303346108-384dtcdcirkatt6v29bce7l74slsu3qq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
