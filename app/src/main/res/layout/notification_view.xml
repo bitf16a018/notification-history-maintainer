@@ -94,4 +94,5 @@
         app:layout_constraintStart_toStartOf="@+id/view_foreground"
         app:layout_constraintTop_toTopOf="@+id/view_foreground"
         app:srcCompat="@mipmap/ic_launcher" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package co.dear.notificationhistorymaintainer;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +39,19 @@ class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.Notif
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String time = sdf.format(new Date(Long.parseLong(notifications.get(position).getTime())));
 
+        Drawable icon = null;
+        try {
+            icon = context.getPackageManager().getApplicationIcon(notifications.get(position).getPackageName());
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         holder.iconImageView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_transition_animation));
         holder.notificationContainer.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_scale_animation));
         holder.titleTextView.setText(notifications.get(position).getTitle());
         holder.descriptionTextView.setText(notifications.get(position).getDescription());
         holder.timeTextView.setText(time);
-        holder.iconImageView.setImageResource(notifications.get(position).getIcon());
+        holder.iconImageView.setImageDrawable(icon);
     }
 
     @Override
