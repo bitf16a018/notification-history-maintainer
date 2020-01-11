@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
@@ -31,11 +33,15 @@ class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.Notif
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String time = sdf.format(new Date(Long.parseLong(notifications.get(position).getTime())));
+
         holder.iconImageView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_transition_animation));
         holder.notificationContainer.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_scale_animation));
         holder.titleTextView.setText(notifications.get(position).getTitle());
         holder.descriptionTextView.setText(notifications.get(position).getDescription());
-        holder.timeTextView.setText(notifications.get(position).getTime());
+        holder.timeTextView.setText(time);
         holder.iconImageView.setImageResource(notifications.get(position).getIcon());
     }
 
@@ -44,15 +50,27 @@ class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.Notif
         return notifications.size();
     }
 
-    public class NotificationViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout notificationContainer;
+    public void removeItem(int position) {
+        notifications.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Notification notification, int position) {
+        notifications.add(position, notification);
+        notifyItemInserted(position);
+    }
+
+
+    class NotificationViewHolder extends RecyclerView.ViewHolder {
+        RelativeLayout notificationContainer, viewBackground;
 
         TextView titleTextView, descriptionTextView, timeTextView;
         ImageView iconImageView;
 
-        public NotificationViewHolder(@NonNull View itemView) {
+        NotificationViewHolder(@NonNull View itemView) {
             super(itemView);
-            notificationContainer = itemView.findViewById(R.id.notification_container);
+            notificationContainer = itemView.findViewById(R.id.view_foreground);
+            viewBackground = itemView.findViewById(R.id.view_background);
             titleTextView = itemView.findViewById(R.id.title_text_view);
             descriptionTextView = itemView.findViewById(R.id.description_text_view);
             timeTextView = itemView.findViewById(R.id.time_text_view);
