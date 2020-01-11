@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -119,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements NotificationTouch
             long yourmilliseconds = intent.getLongExtra("time", 1);
 //            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
 //            Date resultdate = new Date(yourmilliseconds);
-//            Log.wtf("time", sdf.format(resultdate));
 //            String time = sdf.format(resultdate);
 
 
@@ -132,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements NotificationTouch
             //Saving the notification details in database
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Notification Details");
-            Log.wtf(TAG, "onReceive: " + packageName);
             if (intent.getStringExtra("pkg").equals("com.google.android.apps.messaging"))
                 myRef.child("Message").push().setValue(notification);
 
