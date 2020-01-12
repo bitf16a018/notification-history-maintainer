@@ -6,6 +6,8 @@ import android.service.notification.StatusBarNotification;
 
 
 public class NotificationWaliService extends NotificationListenerService {
+    public static final String TAG = NotificationWaliService.class.getName();
+
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
@@ -18,6 +20,7 @@ public class NotificationWaliService extends NotificationListenerService {
         intent.putExtra("desc", sbn.getNotification().extras.getCharSequence("android.text"));
         intent.putExtra("pkg", sbn.getPackageName());
         intent.putExtra("time", sbn.getPostTime());
+//        Notification.Action[] actions = sbn.getNotification().;
         sendBroadcast(intent);
     }
 }

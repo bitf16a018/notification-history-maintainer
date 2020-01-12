@@ -40,16 +40,6 @@ public class MainActivity extends AppCompatActivity implements NotificationTouch
         adapter = new NotificationAdapter(this, notifications);
         recyclerView.setAdapter(adapter);
 
-        if (!AlertDialogUtils.isNotificationListeningServiceEnabled(MainActivity.this)) {
-            AlertDialogUtils.buildNotificationServiceAlertDialog(
-                    this,
-                    ACTION_NOTIFICATION_LISTENER_SETTINGS,
-                    getString(R.string.notification_access_dialog_title),
-                    getString(R.string.notification_access_dialog_message),
-                    getString(R.string.notification_access_dialog_positive_option),
-                    getString(R.string.notification_access_dialog_negative_option)).show();
-        }
-
         receiver = new NotificationReceiver();
         ItemTouchHelper.SimpleCallback callback = new NotificationTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(callback).attachToRecyclerView(recyclerView);
@@ -58,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NotificationTouch
     @Override
     protected void onResume() {
         super.onResume();
-
         if (!AlertDialogUtils.isNotificationListeningServiceEnabled(MainActivity.this)) {
             AlertDialogUtils.buildNotificationServiceAlertDialog(
                     this,
@@ -99,8 +88,6 @@ public class MainActivity extends AppCompatActivity implements NotificationTouch
     //(Icon) intent.getParcelableExtra("icon"),
     private class NotificationReceiver extends BroadcastReceiver {
 
-        public final String TAG = NotificationReceiver.class.getName();
-
         @Override
         public void onReceive(Context context, Intent intent) {
 //            int alreadyExistingIndex = -1;
@@ -130,16 +117,16 @@ public class MainActivity extends AppCompatActivity implements NotificationTouch
             //Saving the notification details in database
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Notification Details");
-            if (intent.getStringExtra("pkg").equals("com.google.android.apps.messaging"))
+            if (intent.getStringExtra("pkg").equalsIgnoreCase("com.google.android.apps.messaging"))
                 myRef.child("Message").push().setValue(notification);
 
-            if (intent.getStringExtra("pkg").equals("com.whatsapp"))
+            if (intent.getStringExtra("pkg").equalsIgnoreCase("com.whatsapp"))
                 myRef.child("Whatsapp").push().setValue(notification);
 
-            if (intent.getStringExtra("pkg").equals("com.facebook.katana"))
+            if (intent.getStringExtra("pkg").equalsIgnoreCase("com.facebook.katana"))
                 myRef.child("Facebook").push().setValue(notification);
 
-            if (intent.getStringExtra("pkg").equals("com.instagram.android"))
+            if (intent.getStringExtra("pkg").equalsIgnoreCase("com.instagram.android"))
                 myRef.child("Instagram").push().setValue(notification);
 
             notifications.add(0, notification);
