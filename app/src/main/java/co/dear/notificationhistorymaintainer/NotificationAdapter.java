@@ -42,7 +42,7 @@ class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.Notif
         holder.titleTextView.setText(notifications.get(position).getTitle());
         holder.descriptionTextView.setText(notifications.get(position).getDescription());
         holder.timeTextView.setText(time);
-        holder.iconImageView.setImageDrawable(AppUtils.getAppIcon(context, notifications.get(position).getPackageName()));
+        holder.iconImageView.setImageResource(notifications.get(position).getIcon());
     }
 
     @Override

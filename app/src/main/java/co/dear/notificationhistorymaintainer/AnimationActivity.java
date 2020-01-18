@@ -54,8 +54,6 @@ public class AnimationActivity extends AppCompatActivity implements Notification
 
         adapter = new NotificationAdapter(this, notifications);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper.SimpleCallback callback = new NotificationTouchHelper(0, ItemTouchHelper.LEFT, this);
