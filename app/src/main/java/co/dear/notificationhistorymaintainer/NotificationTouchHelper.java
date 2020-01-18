@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NotificationTouchHelper extends ItemTouchHelper.SimpleCallback {
     private NotificationTouchHelperListener listener;
 
-    public NotificationTouchHelper(int dragDirs, int swipeDirs, NotificationTouchHelperListener listener) {
+    NotificationTouchHelper(int dragDirs, int swipeDirs, NotificationTouchHelperListener listener) {
         super(dragDirs, swipeDirs);
         this.listener = listener;
     }
-
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -41,10 +40,10 @@ public class NotificationTouchHelper extends ItemTouchHelper.SimpleCallback {
     public int convertToAbsoluteDirection(int flags, int layoutDirection) {
         return super.convertToAbsoluteDirection(flags, layoutDirection);
     }
-    
+
     @Override
     public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
-//        super.onSelectedChanged(viewHolder, actionState);
+        super.onSelectedChanged(viewHolder, actionState);
         if (viewHolder != null) {
             View foregroundView = ((NotificationAdapter.NotificationViewHolder) viewHolder).notificationContainer;
             getDefaultUIUtil().onSelected(foregroundView);
@@ -53,14 +52,14 @@ public class NotificationTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-//        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         View foregroundView = ((NotificationAdapter.NotificationViewHolder) viewHolder).notificationContainer;
         getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive);
     }
 
     @Override
     public void onChildDrawOver(@NonNull Canvas c, @NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-//        super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         View foregroundView = ((NotificationAdapter.NotificationViewHolder) viewHolder).notificationContainer;
         getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive);
     }
