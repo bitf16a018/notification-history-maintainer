@@ -25,7 +25,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".AnimationActivity" />
-        <activity android:name=".TestActivity" />
         <activity android:name=".MainActivity" />
 
         <service
